@@ -4,11 +4,12 @@ import { Loader2 } from 'lucide-react';
 interface PageShellProps {
   children: ReactNode;
   className?: string;
+  fitContent?: boolean;
 }
 
-export function PageShell({ children, className = '' }: PageShellProps) {
+export function PageShell({ children, className = '', fitContent = false }: PageShellProps) {
   return (
-    <div className={`app-bg ${className}`}>
+    <div className={`app-bg ${fitContent ? 'app-bg-fit' : ''} ${className}`}>
       {children}
     </div>
   );
@@ -69,11 +70,12 @@ interface EmptyStateProps {
   icon: ReactNode;
   title: string;
   description?: string;
+  compact?: boolean;
 }
 
-export function EmptyState({ icon, title, description }: EmptyStateProps) {
+export function EmptyState({ icon, title, description, compact = false }: EmptyStateProps) {
   return (
-    <div className="empty-state">
+    <div className={`empty-state ${compact ? 'empty-state-compact' : ''}`}>
       <div className="empty-state-icon">{icon}</div>
       <p className="font-semibold text-slate-700">{title}</p>
       {description && (
