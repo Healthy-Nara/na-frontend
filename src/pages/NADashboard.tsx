@@ -35,7 +35,6 @@ const NADashboard = () => {
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState("");
-  const [childName, setChildName] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -115,7 +114,6 @@ const NADashboard = () => {
       queryClient.invalidateQueries({ queryKey: ["naReports"] });
       setShowCreateModal(false);
       setSelectedBooking("");
-      setChildName("");
       if (data?._id) {
         navigate(`/report/${data._id}`);
       }
@@ -144,12 +142,11 @@ const NADashboard = () => {
   };
 
   const handleCreateReport = () => {
-    if (!selectedBooking || !childName) return;
+    if (!selectedBooking) return;
 
     createReportMutation.mutate({
       bookingId: selectedBooking,
       date: new Date().toISOString(),
-      childName,
       status: "draft",
     });
   };
@@ -402,7 +399,6 @@ const NADashboard = () => {
           onClose={() => {
             setShowCreateModal(false);
             setSelectedBooking("");
-            setChildName("");
           }}
           footer={
             <>
@@ -411,7 +407,6 @@ const NADashboard = () => {
                 onClick={() => {
                   setShowCreateModal(false);
                   setSelectedBooking("");
-                  setChildName("");
                 }}
                 className="btn btn-secondary flex-1"
               >
@@ -422,7 +417,6 @@ const NADashboard = () => {
                 onClick={handleCreateReport}
                 disabled={
                   !selectedBooking ||
-                  !childName ||
                   createReportMutation.isPending
                 }
                 className="btn btn-primary flex-1"
@@ -452,13 +446,7 @@ const NADashboard = () => {
 
             <div>
               <label className="field-label">ကလေးအမည်</label>
-              <input
-                type="text"
-                value={childName}
-                onChange={(e) => setChildName(e.target.value)}
-                className="input"
-                placeholder="ကလေးအမည် ထည့်ပါ"
-              />
+              <p className="text-sm text-slate-500 mt-1">ကလေးအမည်ကို အလိုအလျောက် ဖြည့်ပေးပါမည်</p>
             </div>
           </div>
         </Modal>

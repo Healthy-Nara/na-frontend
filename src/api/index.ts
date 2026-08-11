@@ -91,7 +91,8 @@ export const deleteNAReport = async (id: string) => {
 
 // --- Bookings (for duty start) ---
 export const fetchBookings = async (status?: string) => {
-  const params = status ? { status } : {};
+  const params: any = status ? { status } : {};
+  params.excludeStatuses = 'Completed,Cancelled';
   const { data } = await naApi.get('/bookings', { params });
   return data;
 };
